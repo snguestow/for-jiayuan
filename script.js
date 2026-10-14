@@ -58,6 +58,7 @@
     }
 
     const restaurant = RESTAURANTS[state.index];
+    renderReviewBar();
     $("#progress-text").textContent = `${state.index + 1} / ${RESTAURANTS.length}`;
     $("#progress-bar").style.width = `${((state.index + 1) / RESTAURANTS.length) * 100}%`;
     $("#restaurant-number").textContent = String(state.index + 1).padStart(2, "0");
@@ -82,6 +83,42 @@
       };
       loader.src = restaurant.image;
     }
+  }
+
+  function renderReviewBar() {
+    const list = $("#review-list");
+    const selected = RESTAURANTS.filter((restaurant) => state.votes[restaurant.id]);
+    $("#review-count").textContent = `${selected.length} 项`;
+    list.innerHTML = "";
+
+    if (!selected.length) {
+      const empty = document.createElement("span");
+      empty.className = "review-empty";
+      empty.textContent = "选择后会显示在这里";
+      list.appendChild(empty);
+      return;
+    }
+
+    const choiceMarks = { yes: "✓", maybe: "?", no: "×" };
+    selected.forEach((restaurant) => {
+      const choice = state.votes[restaurant.id];
+      const item = document.createElement("span");
+      item.className = `review-item ${choice}`;
+      item.title = `${restaurant.name}：${choice === "yes" ? "想去" : choice === "maybe" ? "待定" : "不去"}`;
+
+      const mark = document.createElement("span");
+      mark.className = "review-mark";
+      mark.textContent = choiceMarks[choice];
+      const name = document.createElement("span");
+      name.className = "review-name";
+      name.textContent = restaurant.name;
+      item.append(mark, name);
+      list.appendChild(item);
+    });
+
+    window.requestAnimationFrame(() => {
+      list.scrollLeft = list.scrollWidth;
+    });
   }
 
   function renderDishes(dishes) {

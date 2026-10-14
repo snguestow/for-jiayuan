@@ -36,6 +36,23 @@ h1 { margin: 0; font-family: Georgia, "Songti SC", serif; font-size: 30px; lette
 .progress-track { height: 3px; margin-top: 7px; overflow: hidden; border-radius: 99px; background: rgba(30,30,27,.1); }
 .progress-track i { display: block; width: 0; height: 100%; border-radius: inherit; background: var(--ink); transition: width .35s ease; }
 
+.review-bar { margin: -3px 0 14px; padding: 10px 12px 11px; border: 1px solid rgba(30,30,27,.08); border-radius: 16px; background: rgba(255,253,248,.55); }
+.review-heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.review-heading h2 { margin: 0; color: #5f5b55; font-size: 10px; font-weight: 800; letter-spacing: .08em; }
+.review-heading > span { color: var(--muted); font-size: 9px; }
+.review-list { display: flex; min-height: 28px; gap: 7px; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.review-list::-webkit-scrollbar { display: none; }
+.review-empty { align-self: center; color: #aaa49b; font-size: 10px; }
+.review-item { display: flex; height: 28px; flex: 0 0 auto; align-items: center; gap: 6px; padding: 0 9px 0 6px; border: 1px solid var(--line); border-radius: 99px; background: rgba(255,255,255,.72); color: #5d5953; font-size: 10px; font-weight: 650; white-space: nowrap; }
+.review-mark { display: grid; width: 18px; height: 18px; place-items: center; border-radius: 50%; color: white; font: 700 12px/1 Arial, sans-serif; }
+.review-item.yes { border-color: rgba(62,118,86,.2); background: rgba(62,118,86,.07); }
+.review-item.yes .review-mark { background: var(--green); }
+.review-item.maybe { border-color: rgba(180,134,64,.2); background: rgba(180,134,64,.07); }
+.review-item.maybe .review-mark { background: var(--gold); }
+.review-item.no { border-color: rgba(164,77,72,.2); background: rgba(164,77,72,.07); }
+.review-item.no .review-mark { background: var(--red); }
+.review-name { max-width: 88px; overflow: hidden; text-overflow: ellipsis; }
+
 .card-stage { perspective: 1000px; }
 .restaurant-card {
   overflow: hidden;
@@ -78,8 +95,10 @@ h1 { margin: 0; font-family: Georgia, "Songti SC", serif; font-size: 30px; lette
 .image-copy h2 { max-width: 80%; margin: 0 0 7px; font-family: Georgia, "Songti SC", serif; font-size: clamp(30px, 8vw, 40px); line-height: 1.1; letter-spacing: -.04em; }
 .location { margin: 0; font-size: 13px; opacity: .8; }
 .icon-button { border: 0; background: none; }
-.back-button { position: absolute; z-index: 3; top: 16px; left: 16px; display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid rgba(255,255,255,.35); border-radius: 50%; background: rgba(0,0,0,.18); color: white; font-size: 21px; backdrop-filter: blur(10px); }
+.back-button { position: absolute; z-index: 3; top: 16px; left: 16px; display: flex; min-width: 38px; height: 38px; align-items: center; justify-content: center; gap: 7px; padding: 0 13px; border: 1px solid rgba(255,255,255,.35); border-radius: 99px; background: rgba(0,0,0,.25); color: white; font-size: 19px; backdrop-filter: blur(10px); box-shadow: 0 5px 14px rgba(0,0,0,.12); }
+.back-label { font-size: 11px; font-weight: 700; letter-spacing: .01em; }
 .back-button:disabled { visibility: hidden; }
+.back-button:active { transform: scale(.96); background: rgba(0,0,0,.38); }
 
 .restaurant-info { padding: 18px 22px 20px; }
 .info-section + .info-section { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); }
@@ -199,6 +218,7 @@ h1 { margin: 0; font-family: Georgia, "Songti SC", serif; font-size: 30px; lette
 @media (max-height: 760px) {
   .screen { padding-top: 14px; }
   .topbar { margin-bottom: 12px; }
+  .review-bar { margin-bottom: 10px; padding-block: 8px; }
   .restaurant-image { height: 42dvh; min-height: 270px; }
   .restaurant-info { padding-top: 14px; padding-bottom: 14px; }
   .decision-area { margin-top: 12px; }

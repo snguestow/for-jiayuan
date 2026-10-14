@@ -22,11 +22,22 @@
           </div>
         </header>
 
+        <section class="review-bar" aria-labelledby="review-title">
+          <div class="review-heading">
+            <h2 id="review-title">已选回顾</h2>
+            <span id="review-count">0 项</span>
+          </div>
+          <div id="review-list" class="review-list" aria-live="polite">
+            <span class="review-empty">选择后会显示在这里</span>
+          </div>
+        </section>
+
         <div class="card-stage">
           <article id="restaurant-card" class="restaurant-card">
             <div id="restaurant-image" class="restaurant-image" role="img">
               <button id="back-button" class="icon-button back-button" type="button" aria-label="返回上一家">
                 <span aria-hidden="true">←</span>
+                <span class="back-label">重新选择上一家</span>
               </button>
               <div class="image-shade"></div>
               <div class="image-copy">
