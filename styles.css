@@ -1,0 +1,217 @@
+:root {
+  color-scheme: light;
+  --paper: #f7f2ea;
+  --ink: #1e1e1b;
+  --muted: #76736c;
+  --line: rgba(30, 30, 27, 0.12);
+  --card: #fffdf8;
+  --green: #3e7656;
+  --red: #a44d48;
+  --gold: #b48640;
+  font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; min-height: 100%; background: var(--paper); color: var(--ink); }
+
+body {
+  min-height: 100dvh;
+  background-image:
+    radial-gradient(circle at 10% 0%, rgba(201, 169, 113, .16), transparent 35%),
+    radial-gradient(circle at 95% 100%, rgba(62, 118, 86, .10), transparent 38%);
+}
+
+button, a { font: inherit; -webkit-tap-highlight-color: transparent; }
+button { color: inherit; }
+[hidden] { display: none !important; }
+
+.app-shell { width: min(100%, 520px); min-height: 100dvh; margin: 0 auto; }
+.screen { min-height: 100dvh; padding: max(22px, env(safe-area-inset-top)) 20px max(24px, env(safe-area-inset-bottom)); }
+
+.topbar { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 18px; }
+.eyebrow { margin: 0 0 3px; color: var(--gold); font-size: 10px; font-weight: 800; letter-spacing: .18em; }
+h1 { margin: 0; font-family: Georgia, "Songti SC", serif; font-size: 30px; letter-spacing: -.04em; }
+.progress-wrap { width: 88px; text-align: right; color: var(--muted); font-size: 12px; font-weight: 700; }
+.progress-track { height: 3px; margin-top: 7px; overflow: hidden; border-radius: 99px; background: rgba(30,30,27,.1); }
+.progress-track i { display: block; width: 0; height: 100%; border-radius: inherit; background: var(--ink); transition: width .35s ease; }
+
+.card-stage { perspective: 1000px; }
+.restaurant-card {
+  overflow: hidden;
+  border: 1px solid rgba(30,30,27,.08);
+  border-radius: 27px;
+  background: var(--card);
+  box-shadow: 0 20px 55px rgba(56, 47, 35, .12);
+  transform-origin: center 85%;
+}
+.restaurant-card.leave-no { animation: leaveNo .38s ease forwards; }
+.restaurant-card.leave-maybe { animation: leaveMaybe .38s ease forwards; }
+.restaurant-card.leave-yes { animation: leaveYes .38s ease forwards; }
+.restaurant-card.enter { animation: enterCard .38s cubic-bezier(.2,.8,.2,1); }
+
+.restaurant-image {
+  position: relative;
+  height: min(47dvh, 410px);
+  min-height: 320px;
+  overflow: hidden;
+  background-position: center;
+  background-size: cover;
+  transition: background .25s ease;
+}
+.restaurant-image::before {
+  content: attr(data-emoji);
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding-bottom: 45px;
+  font-size: clamp(86px, 25vw, 130px);
+  filter: drop-shadow(0 20px 20px rgba(0,0,0,.18));
+  transform: rotate(-6deg);
+}
+.restaurant-image.has-image::before { display: none; }
+.image-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.04) 35%, rgba(0,0,0,.78) 100%); }
+.image-copy { position: absolute; z-index: 2; right: 22px; bottom: 22px; left: 22px; color: white; }
+.restaurant-number { position: absolute; right: 0; bottom: 4px; color: rgba(255,255,255,.18); font: 700 72px/1 Georgia, serif; }
+.category { margin: 0 0 5px; font-size: 12px; font-weight: 700; letter-spacing: .1em; }
+.image-copy h2 { max-width: 80%; margin: 0 0 7px; font-family: Georgia, "Songti SC", serif; font-size: clamp(30px, 8vw, 40px); line-height: 1.1; letter-spacing: -.04em; }
+.location { margin: 0; font-size: 13px; opacity: .8; }
+.icon-button { border: 0; background: none; }
+.back-button { position: absolute; z-index: 3; top: 16px; left: 16px; display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid rgba(255,255,255,.35); border-radius: 50%; background: rgba(0,0,0,.18); color: white; font-size: 21px; backdrop-filter: blur(10px); }
+.back-button:disabled { visibility: hidden; }
+
+.restaurant-info { padding: 18px 22px 20px; }
+.info-section + .info-section { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); }
+.section-heading { display: flex; align-items: baseline; gap: 9px; margin-bottom: 12px; }
+.section-heading h3 { margin: 0; font: 700 17px/1.2 Georgia, "Songti SC", serif; letter-spacing: -.02em; }
+.section-index { color: var(--gold); font: 800 9px/1 Arial, sans-serif; letter-spacing: .12em; }
+.compact-heading { margin-bottom: 11px; }
+
+.dish-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.dish-item { position: relative; min-width: 0; margin: 0; overflow: hidden; border-radius: 15px; background: #ede5d8; }
+.dish-photo { position: relative; aspect-ratio: 1.48 / 1; overflow: hidden; background: linear-gradient(135deg, hsl(var(--dish-tone) 20% 77%), hsl(var(--dish-tone) 24% 60%)); }
+.dish-photo::before { content: attr(data-emoji); position: absolute; inset: 0; display: grid; place-items: center; padding-bottom: 17px; font-size: 37px; filter: drop-shadow(0 8px 8px rgba(0,0,0,.13)); }
+.dish-photo img { position: relative; z-index: 1; display: block; width: 100%; height: 100%; object-fit: cover; }
+.dish-photo.has-image::before { display: none; }
+.dish-item figcaption { position: absolute; z-index: 2; right: 0; bottom: 0; left: 0; padding: 23px 10px 9px; overflow: hidden; background: linear-gradient(transparent, rgba(0,0,0,.68)); color: white; font-size: 11px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+.empty-info { grid-column: 1 / -1; margin: 0; padding: 24px; border: 1px dashed var(--line); border-radius: 14px; color: var(--muted); text-align: center; font-size: 12px; }
+
+.dianping-link { display: flex; min-height: 64px; align-items: center; gap: 12px; padding: 11px 13px; border: 1px solid rgba(255,99,48,.17); border-radius: 16px; background: rgba(255,99,48,.06); color: var(--ink); text-decoration: none; transition: transform .16s ease, background-color .16s ease; }
+.dianping-mark { display: grid; width: 40px; height: 40px; flex: 0 0 40px; place-items: center; border-radius: 12px; background: #ff6634; color: white; font-size: 19px; font-weight: 850; }
+.dianping-copy { display: grid; min-width: 0; gap: 3px; }
+.dianping-copy strong { font-size: 13px; }
+.dianping-copy small { overflow: hidden; color: var(--muted); font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+.link-arrow { margin-left: auto; color: #ff6634; font-size: 21px; }
+.dianping-link:not(.is-disabled):active { transform: scale(.98); background: rgba(255,99,48,.11); }
+.dianping-link.is-disabled { border-color: var(--line); background: rgba(30,30,27,.025); cursor: default; }
+.dianping-link.is-disabled .dianping-mark { background: #aaa49b; }
+.dianping-link.is-disabled .link-arrow { color: #aaa49b; }
+
+.ratings-layout { display: grid; grid-template-columns: minmax(0, 1fr) 116px; gap: 14px; align-items: stretch; }
+.standard-ratings { display: grid; align-content: center; gap: 13px; }
+.rating-row { display: grid; grid-template-columns: 54px minmax(76px, 1fr); align-items: center; gap: 9px; }
+.rating-row > span { color: #5e5a54; font-size: 10px; font-weight: 650; }
+.star-rating { display: flex; align-items: center; gap: 3px; }
+.star-rating i { color: rgba(30,30,27,.14); font: normal 16px/1 Arial, sans-serif; }
+.star-rating i.is-filled { color: #d5a33e; text-shadow: 0 2px 5px rgba(180,134,64,.18); }
+.ebao-rating { display: grid; min-height: 108px; align-content: center; justify-items: center; border: 1px solid rgba(62,118,86,.18); border-radius: 20px; background: linear-gradient(145deg, rgba(62,118,86,.13), rgba(255,255,255,.7)); color: var(--green); }
+.ebao-rating span { font-size: 10px; font-weight: 750; letter-spacing: .08em; }
+.ebao-rating .star-rating { margin-top: 11px; gap: 2px; }
+.ebao-rating .star-rating i { color: rgba(62,118,86,.17); font-size: 18px; }
+.ebao-rating .star-rating i.is-filled { color: var(--green); text-shadow: 0 2px 6px rgba(62,118,86,.18); }
+
+.decision-area { margin-top: 20px; }
+.decision-hint { margin: 0 0 11px; color: var(--muted); text-align: center; font: italic 13px Georgia, "Songti SC", serif; }
+.decision-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(24px, 8vw, 42px);
+}
+.decision-button {
+  display: grid;
+  width: 72px;
+  height: 72px;
+  flex: 0 0 72px;
+  place-items: center;
+  padding: 0;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  background: rgba(255,255,255,.72);
+  box-shadow: 0 10px 24px rgba(50,40,30,.10), inset 0 0 0 5px rgba(255,255,255,.55);
+  transition: transform .16s ease, box-shadow .16s ease, background-color .16s ease;
+}
+.decision-button .symbol {
+  display: block;
+  font: 500 47px/1 Arial, sans-serif;
+  transform: translateY(-1px);
+}
+.decision-button.no { color: var(--red); background-color: rgba(164,77,72,.08); }
+.decision-button.maybe { width: 64px; height: 64px; flex-basis: 64px; color: var(--gold); background-color: rgba(180,134,64,.08); }
+.decision-button.maybe .symbol { font-size: 39px; font-weight: 650; }
+.decision-button.yes { color: var(--green); background-color: rgba(62,118,86,.08); }
+.decision-button.yes .symbol { font-size: 40px; font-weight: 700; }
+.decision-button:active {
+  transform: scale(.90);
+  box-shadow: 0 4px 10px rgba(50,40,30,.08), inset 0 0 0 4px rgba(255,255,255,.45);
+}
+.decision-button:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
+
+.result-screen { padding-top: max(34px, env(safe-area-inset-top)); }
+.final-screen { padding-top: max(34px, env(safe-area-inset-top)); }
+.final-header { margin-bottom: 24px; }
+.final-header h1 { font-size: 35px; }
+.final-header > p:last-child { margin: 9px 0 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+.final-candidates { display: grid; gap: 12px; }
+.final-candidate { display: grid; grid-template-columns: 82px minmax(0, 1fr) 38px; min-height: 96px; align-items: center; gap: 14px; padding: 7px 14px 7px 7px; border: 1px solid rgba(30,30,27,.09); border-radius: 21px; background: rgba(255,253,248,.82); text-align: left; box-shadow: 0 10px 24px rgba(56,47,35,.07); transition: transform .18s ease, border-color .18s ease, background .18s ease; }
+.candidate-cover { position: relative; display: grid; width: 82px; height: 82px; overflow: hidden; place-items: center; border-radius: 16px; }
+.candidate-cover::before { content: attr(data-emoji); font-size: 35px; filter: drop-shadow(0 6px 6px rgba(0,0,0,.14)); }
+.candidate-cover img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
+.candidate-cover.has-image::before { display: none; }
+.candidate-copy { display: grid; min-width: 0; gap: 4px; }
+.candidate-copy small { color: var(--gold); font-size: 9px; font-weight: 800; letter-spacing: .08em; }
+.candidate-copy strong { overflow: hidden; font-family: Georgia, "Songti SC", serif; font-size: 18px; text-overflow: ellipsis; white-space: nowrap; }
+.candidate-copy > span { overflow: hidden; color: var(--muted); font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+.candidate-check { display: grid; width: 33px; height: 33px; place-items: center; border: 1px solid rgba(62,118,86,.26); border-radius: 50%; color: var(--green); font-size: 17px; }
+.final-candidate:active { transform: scale(.98); }
+.final-candidate.is-selected { border-color: var(--green); background: rgba(62,118,86,.1); transform: scale(.98); }
+.final-candidate.is-selected .candidate-check { background: var(--green); color: white; }
+.return-button { display: block; width: 100%; margin-top: 18px; }
+.result-header { margin-bottom: 22px; text-align: center; }
+.result-header h1 { font-size: 34px; }
+.result-header > p:last-child { margin: 8px 0 0; color: var(--muted); font-size: 13px; }
+.poster-frame { position: relative; min-height: 300px; overflow: hidden; border-radius: 24px; background: #eae2d7; box-shadow: 0 20px 55px rgba(56,47,35,.16); }
+.poster-frame img { display: block; width: 100%; }
+.poster-loading { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-size: 13px; }
+.result-actions { display: grid; gap: 10px; margin-top: 20px; }
+.primary-button, .secondary-button { display: grid; height: 52px; place-items: center; border-radius: 16px; font-size: 14px; font-weight: 750; text-decoration: none; }
+.primary-button { border: 0; background: var(--ink); color: white; }
+.secondary-button { border: 1px solid var(--line); background: rgba(255,255,255,.55); color: var(--ink); }
+.text-button { padding: 8px; border: 0; background: none; color: var(--muted); font-size: 12px; }
+.share-tip { min-height: 20px; margin: 8px 0 0; color: var(--muted); text-align: center; font-size: 12px; }
+
+@keyframes leaveNo { to { opacity: 0; transform: translateX(-80px) rotate(-7deg) scale(.94); } }
+@keyframes leaveMaybe { to { opacity: 0; transform: translateY(-35px) scale(.94); } }
+@keyframes leaveYes { to { opacity: 0; transform: translateX(80px) rotate(7deg) scale(.94); } }
+@keyframes enterCard { from { opacity: 0; transform: translateY(24px) scale(.97); } }
+
+@media (max-height: 760px) {
+  .screen { padding-top: 14px; }
+  .topbar { margin-bottom: 12px; }
+  .restaurant-image { height: 42dvh; min-height: 270px; }
+  .restaurant-info { padding-top: 14px; padding-bottom: 14px; }
+  .decision-area { margin-top: 12px; }
+  .decision-button { width: 64px; height: 64px; flex-basis: 64px; }
+  .decision-button.maybe { width: 58px; height: 58px; flex-basis: 58px; }
+}
+
+@media (min-width: 700px) {
+  body { padding: 24px 0; }
+  .app-shell, .screen { min-height: calc(100dvh - 48px); }
+  .app-shell { overflow: hidden; border: 1px solid rgba(30,30,27,.08); border-radius: 34px; background: rgba(247,242,234,.82); box-shadow: 0 30px 80px rgba(30,24,18,.12); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}

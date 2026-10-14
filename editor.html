@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4efe7" />
+    <title>餐厅数据编辑器 · 下一餐</title>
+    <link rel="stylesheet" href="editor.css" />
+  </head>
+  <body>
+    <header class="editor-header">
+      <div>
+        <p class="eyebrow">NEXT MEAL · DATA EDITOR</p>
+        <h1>餐厅信息表</h1>
+        <p class="subtitle">直接修改单元格；草稿会自动保存在当前浏览器中。</p>
+      </div>
+      <a class="preview-link" href="index.html" target="_blank">打开网页预览 ↗</a>
+    </header>
+
+    <section class="toolbar" aria-label="数据操作">
+      <button id="add-row" class="tool-button" type="button">＋ 添加餐厅</button>
+      <button id="apply-preview" class="tool-button accent" type="button">应用到当前预览</button>
+      <button id="write-file" class="tool-button dark" type="button">写回 restaurants.js</button>
+      <button id="download-file" class="tool-button" type="button">下载 JS 文件</button>
+      <button id="clear-draft" class="tool-button quiet" type="button">恢复 JS 中的数据</button>
+      <span id="save-status" class="save-status" aria-live="polite">已载入</span>
+    </section>
+
+    <div class="notice">
+      <strong>推荐操作：</strong>修改完成后先点“应用到当前预览”查看效果；确认无误后点“写回 restaurants.js”，并在弹窗中选择项目里的同名文件。
+    </div>
+
+    <main class="table-shell">
+      <table id="restaurant-table">
+        <thead>
+          <tr>
+            <th class="sticky-column row-number">序号</th>
+            <th class="sticky-name">餐厅名称</th>
+            <th>餐厅类型</th>
+            <th>位置</th>
+            <th>封面图片</th>
+            <th>封面 emoji</th>
+            <th>渐变色 1</th>
+            <th>渐变色 2</th>
+            <th>大众点评链接</th>
+            <th>距离评分</th>
+            <th>美味评分</th>
+            <th>新奇评分</th>
+            <th class="ebao-head">E宝评分</th>
+            <th>推荐菜 1</th>
+            <th>推荐菜 2</th>
+            <th>推荐菜 3</th>
+            <th>推荐菜 4</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="restaurant-rows"></tbody>
+      </table>
+    </main>
+
+    <template id="rating-template">
+      <select class="rating-select" aria-label="星级">
+        <option value="1">★☆☆☆☆</option>
+        <option value="2">★★☆☆☆</option>
+        <option value="3">★★★☆☆</option>
+        <option value="4">★★★★☆</option>
+        <option value="5">★★★★★</option>
+      </select>
+    </template>
+
+    <script src="restaurants.js"></script>
+    <script src="editor.js"></script>
+  </body>
+</html>
